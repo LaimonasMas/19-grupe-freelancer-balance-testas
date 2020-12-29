@@ -9,7 +9,6 @@ function sortMonths(list) {
 
 sortMonths(account);
 const sortedByMonths = sortMonths(account);
-console.log(sortedByMonths);
 
 function renderMetuBalansas(selector, account, months) {
     const DOM = document.querySelector(selector);
@@ -23,6 +22,8 @@ function renderMetuBalansas(selector, account, months) {
             let income = 0;
             let expense = 0;
             let balance = 0;
+            let incomeArray = [];
+            
             for (let i=0; i<account.length; i++) {
                 
                 let sortedIncome = sortedByMonths[i].income;
@@ -42,7 +43,8 @@ function renderMetuBalansas(selector, account, months) {
                 income += item.income ? item.income : 0;
                 expense += item.expense ? item.expense : 0;
                 balance = income - expense;
-    
+
+                
                     HTML += `<div class="table-row">
                                 <div class="cell">${account[i].month}</div>
                                 <div class="cell">${months[i]}</div>
@@ -51,6 +53,7 @@ function renderMetuBalansas(selector, account, months) {
                                 <div class="cell">${balance} Eur</div>
                             </div>`
             }
+            
             const incomeDOM = document.querySelector('.table-footer > .cell:nth-of-type(3)');
             const expenseDOM = document.querySelector('.table-footer > .cell:nth-of-type(4)');
             const balanceDOM = document.querySelector('.table-footer > .cell:nth-of-type(5)');
@@ -59,16 +62,12 @@ function renderMetuBalansas(selector, account, months) {
             expenseDOM.innerText = expense + ' Eur';
             balanceDOM.innerText = income - expense + ' Eur';
 
-            
-
-
+            const minIncomeDOM = document.querySelector('#minIncome');
+            const maxIncomeDOM = document.querySelector('#maxIncome');
+            const minExpenseDOM = document.querySelector('#minExpense');
+            const maxExpenseDOM = document.querySelector('#maxExpense');
         }
-
     DOM.innerHTML = HTML;
-
-
-
-
 }
 
 export { renderMetuBalansas }
