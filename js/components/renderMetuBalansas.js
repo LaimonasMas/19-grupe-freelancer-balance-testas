@@ -13,40 +13,47 @@ console.log(sortedByMonths);
 
 function renderMetuBalansas(selector, account, months) {
     const DOM = document.querySelector(selector);
-    if (!DOM) {
-        return false;
-    }
-    
-    let HTML = '';
-
-    if (selector === '#content') {
-for (let i=0; i<account.length; i++) {
-    let sortedIncome = sortedByMonths[i].income;
-    let sortedExpense = account[i].expense;
-    let balance = sortedIncome - sortedExpense;
-    console.log(balance);
-    if (typeof sortedIncome === 'number') {
-        sortedIncome = sortedIncome + ' Eur';
-        } else {
-            sortedIncome = '-';
+        if (!DOM) {
+            return false;
         }
-    if (typeof sortedExpense === 'number') {
-        sortedExpense = sortedExpense + ' Eur';
-    } else {
-        sortedExpense = '-';
-    }
+        
+        let HTML = '';
 
-        HTML += `<div class="table-row">
-                    <div class="cell">${account[i].month}</div>
-                    <div class="cell">${months[i]}</div>
-                    <div class="cell">${sortedIncome}</div>
-                    <div class="cell">${sortedExpense}</div>
-                    <div class="cell">150 Eur</div>
-                </div>`
-        }
-    }
+        if (selector === '#content') {
+            let income = 0;
+            let expense = 0;
+            let balance = 0;
+        for (let i=0; i<account.length; i++) {
+            
+            let sortedIncome = sortedByMonths[i].income;
+            let sortedExpense = sortedByMonths[i].expense;
+            
+            if (typeof sortedIncome === 'number') {
+                sortedIncome = sortedIncome;
+                } else {
+                    sortedIncome = 0;
+                }
+            if (typeof sortedExpense === 'number') {
+                sortedExpense = sortedExpense;
+            } else {
+                sortedExpense = 0;
+            }
+            const item = sortedByMonths[i];
+            income += item.income ? item.income : 0;
+            expense += item.expense ? item.expense : 0;
+            balance = income - expense;
+            
+                HTML += `<div class="table-row">
+                            <div class="cell">${account[i].month}</div>
+                            <div class="cell">${months[i]}</div>
+                            <div class="cell">${sortedIncome} Eur</div>
+                            <div class="cell">${sortedExpense} Eur</div>
+                            <div class="cell">${balance} Eur</div>
+                        </div>`
+                }
+            }
     
-DOM.innerHTML = HTML;
+    DOM.innerHTML = HTML;
 
 
 
